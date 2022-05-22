@@ -21,13 +21,11 @@ const Navbar=(()=>{
       const {state,dispatch}=useContext(UserContext)
       const history=useHistory()
 
-        
-
       const logout=()=>{
         localStorage.clear()
         dispatch({type:"CLEAR"})
         M.toast({html:"Logged out successfully",displayLength:1000})
-        history.push('/signin')
+        history.push('/')
       }
 
       const render=()=>{
@@ -35,19 +33,19 @@ const Navbar=(()=>{
           {
               return[
                   <div>
-                  <li><Link to="/" className="text-link"><i class="large material-icons">home</i></Link></li>
-                  <li><Link><i class="large material-icons modal-trigger" data-target="modal1">search</i></Link></li>
-                  <li><Link to="/profile" className="text-link"><i class="large material-icons">account_circle</i>
-                  </Link></li>
-                  <li onClick={()=>logout()} className="text-link logout">Log Out</li>
+                    <li><Link to="/home" className="text-link"><i class="large material-icons">home</i></Link></li>
+                    <li><Link><i class="large material-icons modal-trigger" data-target="modal1">search</i></Link></li>
+                    <li><Link to="/profile" className="text-link"><i class="large material-icons">account_circle</i>
+                    </Link></li>
+                    <li onClick={()=>logout()} className="text-link logout">Log Out</li>
                 </div>
               ]
           }
           else{
               return[
                   <div>
-                <li><Link to="/signin" className="text-link">Sign in</Link></li>
-                <li><Link to="/signup" className="text-link">Sign up</Link></li>
+                    <li><Link to="/" className="text-link">Sign in</Link></li>
+                    <li><Link to="/signup" className="text-link">Sign up</Link></li>
                 </div>
               ]
           }
@@ -56,18 +54,19 @@ const Navbar=(()=>{
         if(state)
         {
             return[
-                <div><li><Link to="/" className="text-link"><i class="small material-icons">home</i>Home</Link></li>
-                <li><Link className="text-link  modal-trigger" data-target="modal1"><i class="small material-icons"  >search</i>Search</Link></li>
-                <li><Link to="/profile" className="text-link"><i class="small material-icons">account_circle</i>Profile</Link></li>
-                <li><Link to="/signin" onClick={()=>logout()} className="text-link"><i class="small material-icons">person</i>Log out</Link></li>
+                <div>
+                  <li><Link to="/home" className="text-link"><i class="small material-icons">home</i>Home</Link></li>
+                  <li><Link className="text-link  modal-trigger" data-target="modal1"><i class="small material-icons" >search</i>Search</Link></li>
+                  <li><Link to="/profile" className="text-link"><i class="small material-icons">account_circle</i>Profile</Link></li>
+                  <li><Link to="/" onClick={()=>logout()} className="text-link"><i class="small material-icons" >person</i>Log out</Link></li>
                 </div>
             ]
         }
         else{
             return[
                 <div>
-                <li><Link to="/signin" className="text-link"><i class="small material-icons">person</i>Sign in</Link></li>
-                <li><Link to="/signup" className="text-link"><i class="small material-icons">person_outline</i>Sign up</Link></li>
+                  <li><Link to="/" className="text-link"><i class="small material-icons">person</i>Sign in</Link></li>
+                  <li><Link to="/signup" className="text-link"><i class="small material-icons">person_outline</i>Sign up</Link></li>
               </div>
             ]
         }
@@ -101,7 +100,7 @@ const Navbar=(()=>{
         <div className="" id="navi">
         <nav className="nav-color" >
         <div className="nav-wrapper pink lighten-1 z-depth-2 ">
-            <Link to={state?"/":"/signin"} className="brand-logo text-link">Nutshell</Link>
+            <Link to={state?"/home":"/"} className="brand-logo text-link">Nutshell</Link>
            
             <a href="#" data-target="mobile" className="sidenav-trigger text-link"><i className="material-icons">menu</i></a>
             <ul className="right hide-on-med-and-down">

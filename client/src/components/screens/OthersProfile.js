@@ -1,5 +1,4 @@
 import React,{ useState ,useEffect,useContext} from 'react'
-import Footer from '../Footer'
 import {UserContext} from '../../App'
 import { Link,useHistory, useParams} from 'react-router-dom';
 import $ from 'jquery'
@@ -19,31 +18,35 @@ const Profile=(()=>{
     const [followers,setFollowers]=useState([])
     const [following,setFollowing]=useState([])
 
-    var users;
     useEffect(()=>{
-        if(userId==state._id)
-        {
-            history.push('/profile')
-        }
-        else
-        {
-
-            fetch(`/otherspost/${userId}`,{
-                headers:{
-                    "Authorization":"Bearer "+localStorage.getItem("jwt")
-                }
-            }).then(res=>res.json())
-            .then(result=>{
-              setPics(result.posts)
-              setProfile(result)
-                setProname(result.name)
-                setPropic(result.profilePic)
-                setProbio(result.bio)
-                setFollowers(result.followers)
-                setFollowing(result.following)
-                
-            })
-        }
+      const user=JSON.parse(localStorage.getItem("user"))
+      if(!user){
+        history.push('/')
+        return
+      }
+     if(userId===user._id)
+      {
+        history.push('/profile')
+        return
+      }
+      else
+      {
+        fetch(`/otherspost/${userId}`,{
+            headers:{
+                "Authorization":"Bearer "+localStorage.getItem("jwt")
+            }
+        }).then(res=>res.json())
+        .then(result=>{
+          setPics(result.posts)
+          setProfile(result)
+          setProname(result.name)
+          setPropic(result.profilePic)
+          setProbio(result.bio)
+          setFollowers(result.followers)
+          setFollowing(result.following)
+            
+        })
+      }
     },[followers])
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -108,7 +111,7 @@ const Profile=(()=>{
                 //history.push('/othersprofile/'+userId)
                 dispatch({type:"UPDATE",payload:{following:result.following,followers:result.followers}})
                 localStorage.setItem("user",JSON.stringify(result))
-                const newFollower =followers.filter(item=>item != result._id )
+                const newFollower =followers.filter(item=>item !== result._id )
                 setFollowers(newFollower)
                 M.toast({html:"Profile unfollowed",displayLength:1000,classes:'toast'})
                 
@@ -125,14 +128,14 @@ const Profile=(()=>{
         userProfile?
         <div>
         <div className="profile-page">
-            <div style={{display:"flex",justifyContent:"space-around",backgroundColor:"#f5f5f5"}}>
-                <div>
-                <img className="profile-photo" src={propic}/>
+            <div className="others-profile" style={{display:"flex",justifyContent:"space-around",backgroundColor:"#f5f5f5",alignContent:"center"}}>
+                <div className="others-profile-div1">
+                  <img className="profile-photo" alt="profile pic" src={propic}/>
                 </div>
-                <div>
+                <div className="others-profile-div2">
                     <h4>{proname}</h4>
                     <h6>{probio}</h6>
-                    <div style={{display:"flex",justifyContent:"space-around",width:"107%"}}>
+                    <div style={{display:"flex"}}>
                     <h6>{mypics.length} posts</h6>
                     <h6>{followers.length} followers</h6>
                     <h6>{following.length} following</h6>
@@ -149,7 +152,15 @@ const Profile=(()=>{
             {
                 mypics.map(item=>{
                     return(
+                      <div className="post-image">
+                        <div className="post-hover">
+                            <div className="post-like-count">
+                                <i class="small material-icons favorite">favorite</i>
+                                <h6>{item.likes.length}</h6>
+                            </div>
+                        </div>
                         <img className="item" src={item.photo} alt="Loading..."></img>
+                      </div>
                     )
                 })
             }   

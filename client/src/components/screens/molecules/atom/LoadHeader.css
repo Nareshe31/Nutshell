@@ -1,0 +1,80 @@
+.load-wraper{
+    position: relative;
+    height: 60px;
+    width: 100%;
+    background-color: #fdfdfd;
+    z-index: 44;
+    overflow: hidden;
+    border-radius: 5px;
+    display: flex;
+    justify-content: initial;
+    align-items: center;
+}
+.activity{
+    position: absolute;
+    left: -45%;
+    height: 130%;
+    width: 60%;
+    background-image: linear-gradient(to left, rgba(251,251,251, .05), rgba(251,251,251, .3), rgba(251,251,251, .6), rgba(251,251,251, .3), rgba(251,251,251, .05));
+    background-image: -moz-linear-gradient(to left, rgba(251,251,251, .05), rgba(251,251,251, .3), rgba(251,251,251, .6), rgba(251,251,251, .3), rgba(251,251,251, .05));
+    background-image: -webkit-linear-gradient(to left, rgba(251,251,251, .05), rgba(251,251,251, .3), rgba(251,251,251, .6), rgba(251,251,251, .3), rgba(251,251,251, .05));
+    animation: loading 1s infinite;
+    z-index: 45;
+}
+
+
+.avatar-content{
+    width: 80%;
+    height: 25px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color:rgba(51,51,51, .15);
+}
+.avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgba(51,51,51, .15);
+    margin: 0.8rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.load-image-wraper{
+    position: relative;
+    height: 500px;
+    width: 100%;
+    background-color:rgba(51,51,51, .15);
+    z-index: 44;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.image-activity{
+    width: 70%;
+    height: 120%;
+    position: absolute;
+    left: -45%;
+    background-image: linear-gradient(to left, rgba(251,251,251, .05), rgba(251,251,251, .3), rgba(251,251,251, .6), rgba(251,251,251, .3), rgba(251,251,251, .05));
+    background-image: -moz-linear-gradient(to left, rgba(251,251,251, .05), rgba(251,251,251, .3), rgba(251,251,251, .6), rgba(251,251,251, .3), rgba(251,251,251, .05));
+    background-image: -webkit-linear-gradient(to left, rgba(251,251,251, .05), rgba(251,251,251, .3), rgba(251,251,251, .6), rgba(251,251,251, .3), rgba(251,251,251, .05));
+    animation: loading 1s infinite;
+    z-index: 45;
+    object-fit: contain;
+}
+
+@media screen and (max-width: 700px){
+    .image-activity{
+        height: 400px;
+    }
+}
+
+@keyframes loading {
+    0%{
+        left: -45%;
+    }
+    100%{
+        left: 100%;
+    }
+}

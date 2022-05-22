@@ -1,9 +1,8 @@
 import React from 'react'
-import AppFooter from './AppFooter'
 import {useState,useEffect} from 'react'
 import M from 'materialize-css'
-import {Link,useHistory} from 'react-router-dom'
-import Footer from '../Footer'
+import {useHistory} from 'react-router-dom'
+
 
 const CreatePost=()=>{
     const [body,setBody]=useState('')
@@ -14,7 +13,7 @@ const CreatePost=()=>{
     useEffect(()=>{
         if(url)
         {
-            console.log("inside")
+            
             fetch("/createpost",{
                 method:"post",
                 headers:{
@@ -33,14 +32,24 @@ const CreatePost=()=>{
                 }
                 else{
                     M.toast({html:"Posted successfully",displayLength:1000})
-                    history.push('/')
+                    history.push('/home')
                 }
             })
         }
     },[url]);
+    const posdata=(e)=>{
+        e.preventDefault();
+        if(image && body)
+        {
+            postdata()
+        }
+        else{
+            M.toast({html:"Please select image and enter caption",displayLength:1500})
+        }
+    }
 
-    const posdata=()=>{
-        console.log("Image uploading")
+    const postdata=()=>{
+        M.toast({html:"Uploading your post...",displayLength:1000})
         const filedata=new FormData()
         filedata.append("file",image)
         filedata.append("upload_preset","insta-clone")
@@ -51,6 +60,7 @@ const CreatePost=()=>{
         })
         .then(res=>res.json())
         .then(data=>{
+            console.log(data)
             setUrl(data.url)
         })
         .catch(err=>{
@@ -61,30 +71,36 @@ const CreatePost=()=>{
 
     return(
         <div>
-        <div style={{position:"relative"}}>
-            <div className="create-post">
-            {(()=>{if(image){
-                const imgsrc=URL.createObjectURL(image)
-                    return(<img className="create-image" style={{maxWidth:"430px",maxHeight:"400px",display:"flex",border:"1px solid #999",marginBottom:"10px"}} src={imgsrc}></img>
-                    )
-            }})()}
-            {(()=>{if(body){
-                    return(<h6 style={{marginBottom:"10px",marginTop:"0"}}>{body}</h6>
-                    )
-            }})()}
-            <div class="file-field input-fieeld">
-              <div class="btn but-hover">
-                <span>Upload Image</span>
-                <input type="file" onChange={(e)=>setImage(e.target.files[0])}/>  
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Upload file"/>
-              </div>
+            <div style={{position:"relative"}} className="create-post-div">
+                <div className="create-post">
+                <div className="create-post-title"><h4>Create Post</h4></div>
+                    {(()=>{if(image){
+                        const imgsrc=URL.createObjectURL(image)
+                            return(<img className="create-image" alt={"Loading "} src={imgsrc}></img>
+                            )
+                    }})()}
+                    {(()=>{if(body){
+                            return(<h6 style={{marginBottom:"10px",marginTop:"0",textAlign:"center"}}>{body}</h6>
+                            )
+                    }})()}
+                    <form style={{justifyContent:"center",alignItems:"center",display:"grid",alignContent:"center"}}>
+                        <div class="file-field input-fieeld">
+                            <div class="btn but-hover">
+                                <span>Upload Image</span>
+                                <input type="file" onChange={(e)=>setImage(e.target.files[0])}/>  
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Upload file"/>
+                            </div>
+                        </div>
+                        <input type="text" value={body} onChange={(e)=>setBody(e.target.value)} placeholder="Caption"></input>
+                        <div className="create-button">
+                            <button type="submit" className="btn but btn-small pink lighten-1"  onClick={(e)=>posdata(e)} >Post</button>
+                            <button type="submit" className="btn but btn-small pink lighten-1" onClick={(e)=>history.push('/home')} >Cancel</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <input type="text" value={body} onChange={(e)=>setBody(e.target.value)} placeholder="Description"></input>
-            <button className="btn" style={{margin:"10px 0"}} onClick={()=>posdata()} type="submit">Post</button>
-            </div>
-        </div>
         </div>
     )
 }

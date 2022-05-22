@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Mono:400');
+
+.error{ 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  margin: 0;
+  color: #131313;
+  width: 95%;
+  height: 85vh;
+  font-size: 96px;
+  font-family: 'Fira Mono', monospace;
+  letter-spacing: -7px;
+}
+
+.error .error-content{
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.error-content p{
+    margin: auto;
+}
+.error span{
+    font-size: 50px;
+}
+.error{
+  animation: glitch 1s linear infinite;
+}
+
+@keyframes glitch{
+  2%,64%{
+    transform: translate(2px,0) skew(0deg);
+  }
+  10%,50%{
+    transform: translate(-2px,0) skew(0deg);
+  }
+  62%{
+    transform: translate(0,0) skew(10deg); 
+  }
+}
